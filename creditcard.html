@@ -57,13 +57,21 @@
     </style>
     <script>
         const orderItems = [];
-        
+        const itemPrices = {
+            "Veg-Biryani": 120,
+            "Paneer Biryani": 100,
+            "Meals": 80,
+            "Chicken Biryani": 90,
+            "Prawns Biryani": 130,
+            "Mutton Biryani": 150
+        };
+
         function addToOrder() {
             const itemSelect = document.getElementById("foodItem");
             const quantityInput = document.getElementById("quantity");
 
             const foodItem = itemSelect.options[itemSelect.selectedIndex].text;
-            const quantity = quantityInput.value;
+            const quantity = parseInt(quantityInput.value);
 
             if (quantity <= 0) {
                 alert("Please select a valid quantity.");
@@ -84,6 +92,12 @@
                 orderItem.textContent = `${item.foodItem} - Quantity: ${item.quantity}`;
                 orderSummary.appendChild(orderItem);
             });
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+            const totalAmount = calculateTotal();
+            document.getElementById("totalAmount").textContent = `Total Amount: Rs ${totalAmount}`;
         }
 
         function confirmOrder() {
@@ -100,12 +114,13 @@
                 return;
             }
 
-            alert("Order confirmed successfully!\nTotal Amount: Rs" + calculateTotal());
+            alert("Order confirmed successfully!\nTotal Amount: Rs " + calculateTotal());
         }
 
         function calculateTotal() {
-            // Example total calculation, adjust as needed
-            return (orderItems.length * 100).toFixed(2); // Assuming each item costs $10
+            return orderItems.reduce((total, item) => {
+                return total + (itemPrices[item.foodItem] * item.quantity);
+            }, 0).toFixed(2);
         }
     </script>
 </head>
@@ -160,7 +175,7 @@
         <input type="text" id="postalCode" placeholder="123456" required>
 
         <h2>Total Bill</h2>
-        <p><strong><Total Amount: Rs ></strong></p>
+        <p id="totalAmount"><strong>Total Amount: Rs 0.00</strong></p>
 
         <button type="button" onclick="confirmOrder()">Confirm Order</button>
     </div>
