@@ -3,23 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Form</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    
 </head>
 <body>
-   <div class = "login-form">
-    <h1>login form</h1>
-    <form action = "#" method="post">
-        <p>User Name</p>
-        <input type="text" placeholder="UserName">
-        <p>Password</p>
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit"><a href="home.html">Login</a></button>
-        <button type="reset">Register</button>
-        
+    <div class="login-form">
+        <h1>Login Form</h1>
+        <form action="#" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Username">
 
-    </form>
-   </div> 
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password">
+
+            <button type="submit">Login</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+
+    <script>
+        // Replace with your actual credentials or a secure storage mechanism
+        const validUsername = "admin";
+        const validPassword = "1234";
+
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === validUsername && password === validPassword) {
+                // Successful login, redirect or perform other actions
+                window.location.href = "home.html";
+            } else {
+                // Invalid credentials, display an error message or handle accordingly
+                alert("Invalid username or password.");
+            }
+        });
+    </script>
 </body>
 </html>
